@@ -9,6 +9,7 @@
 //        ответ: нет решения.
 //        *Подумать над тем, как сделать минимальное количество команд
 
+
 public class program {
     public static void main(String[] args) {
         int a = 4;
