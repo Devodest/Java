@@ -10,7 +10,7 @@
 //        *Подумать над тем, как сделать минимальное количество команд
 
 
-public class program {
+public class Program {
     public static void main(String[] args) {
         int a = 4;
         int b = 10;
@@ -32,7 +32,6 @@ public class program {
             }
         }
     }
-
 
     private static int summa(int x, int d) {
         return x + d;

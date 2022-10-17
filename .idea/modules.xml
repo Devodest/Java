@@ -4,7 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HomeWork000/HomeWork000.iml" filepath="$PROJECT_DIR$/HomeWork000/HomeWork000.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Java_education.iml" filepath="$PROJECT_DIR$/.idea/Java_education.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HomeWork000/Sem002/Sem002.iml" filepath="$PROJECT_DIR$/HomeWork000/Sem002/Sem002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/homeWork001/homeWork001.iml" filepath="$PROJECT_DIR$/homeWork001/homeWork001.iml" />
       <module fileurl="file://$PROJECT_DIR$/seminar000/seminar000.iml" filepath="$PROJECT_DIR$/seminar000/seminar000.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seminar001/seminar001.iml" filepath="$PROJECT_DIR$/seminar001/seminar001.iml" />
     </modules>
   </component>
 </project>

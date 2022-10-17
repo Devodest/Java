@@ -1,7 +1,7 @@
 //Написать программу вычисления n-ого треугольного числа.
 
 
-public class triangular_number {
+public class triangularNumber {
     public static void main(String[] args) {
         int n = 5;
         int result = 0;
