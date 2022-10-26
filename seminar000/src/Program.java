@@ -11,33 +11,32 @@
 
 
 public class Program {
-    public static void main(String[] args) {
-        int a = 4;
-        int b = 10;
-        int c = 2;
-        int d = 1;
-        int x = a;
-        while (x != b) {
-            if (x > b) {
-                System.out.println("Такого решения нету");
-                break;
-            } else {
-                if ((b % x == 1) && (b - x != 1)) {
-                    x = multiply(x, c);
-                    System.out.println(x + " first");
-                } else {
-                    x = summa(x, d);
-                    System.out.println(x + " second");
-                }
-            }
+    static void solve(int s, int e, int p, int m) {
+        int[] ways = new int[e + p];
+        ways[s] = 1;
+//        for (int item = s + 1; item <= e; item++) {
+//            if (item % 2 == 0)
+//                ways[item] = ways[item - 1] + ways[item / 2];
+//            else
+//                ways[item] = ways[item - 1];
+        for (int i = s + 1; i <= e; i++) {
+            ways[i] = i % 2 == 0 ? ways[i - p] + ways[i / m] : ways[i - p];
+        }
+
+        for (int way : ways) {
+            System.out.print(way + " ");
         }
     }
 
-    private static int summa(int x, int d) {
-        return x + d;
+    static int f(int s, int e, int p, int m) {
+        if (e == s) return 1;
+        else if (e % m == 0) return f(s, e - p, p, m) + f(s, e / m, p, m);
+        else  return f(s, e - p, p, m);
+
     }
 
-    private static int multiply(int a, int b) {
-        return a * b;
+    public static void main(String[] args) {
+        //solve(2, 11, 1, 2);
+        System.out.println(f(2, 11, 1, 2));
     }
 }
