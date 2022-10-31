@@ -14,11 +14,22 @@ public class selfEd {
     static double raisingNumber(double a, double b) {
         double res = 0;
         if (b == 0) {
-            res = Math.pow(a, 1);
+            b = 1;
+            res = a * b;
             return res;
         } else if (a == 0) System.out.println("Не определенно");
-        else {
-            res = Math.pow(a, b);
+        else if (b < 0) {
+            res = a;
+            for (int i = 0; i != ; i++) {
+                res *= a;
+                b--;
+            }
+        } else {
+            res = a;
+            for (int i = 0; i < b; i++) {
+                res *= a;
+                b--;
+            }
             return res;
         }
         return 0;
@@ -42,7 +53,7 @@ public class selfEd {
     static void fileWriter(double res) {
         try (FileWriter fw = new FileWriter("C:\\Users\\Hart\\Desktop\\Java_education\\selfed\\src\\output.txt")) {
             fw.write(String.valueOf(res));
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("There was a problem: " + e);
             e.printStackTrace();
         }
