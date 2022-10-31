@@ -1,6 +1,8 @@
 # Default ignored files
 /shelf/
 /out/
+/out/production/selfed
+out/production/selfed
 /workspace.xml
 ##############################
 ## Java
