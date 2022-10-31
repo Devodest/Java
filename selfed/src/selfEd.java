@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.*;
 
@@ -20,10 +21,10 @@ public class selfEd {
         } else if (a == 0) System.out.println("Не определенно");
         else if (b < 0) {
             res = a;
-            for (int i = 0; i != ; i++) {
+            for (int i = -1; i > b; i--) {
                 res *= a;
-                b--;
             }
+            return 1 / res;
         } else {
             res = a;
             for (int i = 0; i < b; i++) {
@@ -37,7 +38,7 @@ public class selfEd {
 
     static Map<String, Double> fileReader() {
         Map<String, Double> map = new HashMap<>();
-        try (BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\Hart\\Desktop\\Java_education\\selfed\\src\\input.txt"))) {
+        try (BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\Devodest\\Desktop\\Java\\selfed\\src\\input.txt"))) {
             String read = null;
             while ((read = in.readLine()) != null) {
                 String[] split = read.split(" ");
@@ -51,7 +52,7 @@ public class selfEd {
     }
 
     static void fileWriter(double res) {
-        try (FileWriter fw = new FileWriter("C:\\Users\\Hart\\Desktop\\Java_education\\selfed\\src\\output.txt")) {
+        try (FileWriter fw = new FileWriter("C:\\Users\\Devodest\\Desktop\\Java\\selfed\\src\\output.txt")) {
             fw.write(String.valueOf(res));
         } catch (IOException e) {
             System.out.println("There was a problem: " + e);
