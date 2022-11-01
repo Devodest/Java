@@ -42,6 +42,8 @@ public class Storage {
     }
 
     public static void main(String[] args) {
-
+        add(2);
+        add(3);
+        print();
     }
 }

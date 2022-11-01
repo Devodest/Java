@@ -1,19 +1,16 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Wave {
     static int[][] array = new int[10][10];
-    static Random rnd = new Random();
+    static int[][] calcResult = new int[10][10];
     static int rows = array[0].length;
     static int columns = array[1].length;
 
-    static int right, left, up, down, start, end = 0;
-    static int startRow = 5;
-    static int startColumn = 3;
+    static List<String> visited = new ArrayList<>();
 
-    static int endRow = 8;
-    static int endColumn = 8;
-
-    static int k = 0;
+    int x, y = 0;
 
     static void print(int[][] array) {
         for (int i = 0; i < rows; i++) {
@@ -25,7 +22,7 @@ public class Wave {
         }
     }
 
-    static void filling(int[][] array) {
+    static void filling() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 array[i][0] = -1;
@@ -35,21 +32,51 @@ public class Wave {
             }
         }
     }
+    static void waveFill(int x, int y){
+        waveFill(x, y, 0);
+    }
+    static void waveFill(int x, int y, int score) {
+        System.out.printf("CURRENT POINT %s %s\n", x, y);
+        String key = x+"|"+y;
+        if(visited.contains(key))
+            return;
+        else
+            visited.add(x+"|"+y);
 
-    static void waveFill(int[][] array) {
-        for (int i = 0; i < rows-2; i++) {
-            for (int j = 0; j < columns-2; j++) {
-//                if (array[i][j] == -1)
-//                array[i+1][j+1] += i+j;
+        if(array[x][y] < 0){
+            System.out.println("This is wall");
+            return;
+        }
 
-            }
+        if(calcResult[x][y] > score || calcResult[x][y] == 0){
+            calcResult[x][y] = score;
+        }
+
+        int next = score + 1;
+
+        if(y - 1 >= 0){
+            System.out.printf("Top %s %s\n", x, y - 1);
+            waveFill(x,y-1, next);
+        }
+        if(y + 1 < 10){
+            System.out.printf("Bottom %s %s\n", x, y + 1);
+            waveFill(x,y+1, next);
+        }
+        if(x - 1 >= 0){
+            System.out.printf("Left %s %s\n", x - 1, y);
+            waveFill(x - 1,y, next);
+        }
+        if (x + 1 < 10){
+            System.out.printf("Right %s %s\n", x + 1, y);
+            waveFill(x + 1,y, next);
         }
     }
 
     public static void main(String[] args) {
-        filling(array);
-        waveFill(array);
-        print(array);
+        filling();
+        calcResult = array.clone();
+        waveFill(6, 6);
+        print(calcResult);
 
     }
 
