@@ -11,13 +11,9 @@ public class Main {
     }
 
     private static void fillArray(int[][] array) {
-        int x, y = 0;
-        int summ = 0;
-        int gran = array[0].length;
         for (int i = 0; i < array[0].length; i++) {
             for (int j = 0; j < array[1].length; j++) {
                 array[i][j] += i + j;
-                if (array[i][j] == array[0])
             }
         }
     }

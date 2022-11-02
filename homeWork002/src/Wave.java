@@ -1,83 +1,106 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class Wave {
+
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RESET = "\u001B[0m";
     static int[][] array = new int[10][10];
-    static int[][] calcResult = new int[10][10];
     static int rows = array[0].length;
     static int columns = array[1].length;
 
-    static List<String> visited = new ArrayList<>();
+    static class Node {
+        int x, y, dist;
 
-    int x, y = 0;
+        Node(int x, int y, int dist) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+        }
+    }
+    private static final int[] row = {-1, 0, 0, 1};
+    private static final int[] col = {0, -1, 1, 0};
 
-    static void print(int[][] array) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                String sf1 = String.format(" %2s ", array[i][j]);
-                System.out.print(sf1);
+
+    private static boolean isValid(int[][] mat, int[][] visited, int row, int col) {
+        return (row >= 0) && (row < mat.length) && (col >= 0) && (col < mat[0].length) && mat[row][col] == 1 && visited[row][col] == 0;
+    }
+
+
+    public static int findShortestPath(int[][] mat, int i, int j, int x, int y) {
+        // if input is invalid
+        if (mat == null || mat.length == 0 || mat[i][j] == 0 || mat[x][y] == 0) {
+            return -1;
+        }
+
+        int M = mat.length;
+        int N = mat[0].length;
+        int[][] visited = new int[M][N];
+        Queue<Node> q = new ArrayDeque<>();
+
+        visited[i][j] = -1;
+        q.add(new Node(i, j, 1));
+
+        int min_dist = Integer.MAX_VALUE;
+
+        while (!q.isEmpty()) {
+            Node node = q.poll();
+
+            i = node.x;
+            j = node.y;
+            int dist = node.dist;
+
+            if (i == x && j == y) {
+                min_dist = dist;
+                String wayOut = formWayOut(visited, x, y, min_dist);
+                printWayOut(wayOut, mat, M, N);
+                break;
+            }
+
+            for (int k = 0; k < 4; k++) {
+                if (isValid(mat, visited, i + row[k], j + col[k])) {
+                    visited[i + row[k]][j + col[k]] = dist;
+                    q.add(new Node(i + row[k], j + col[k], dist + 1));
+                }
+            }
+        }
+
+        if (min_dist != Integer.MAX_VALUE) {
+            return min_dist;
+        }
+        return -1;
+    }
+
+    private static String formWayOut(int[][] visited, int x, int y, int min_dist) {
+        StringBuilder wayOut = new StringBuilder("");
+        wayOut.append("0, 0 - ");
+        wayOut.append(String.format("%d, %d - ", x, y));
+        while (min_dist-- != 0) {
+            for (int k = 0; k < 4; k++) {
+                if (x == 0 && k == 0) continue;
+                if (y == 0 && k == 1) continue;
+                if (visited[x + row[k]][y + col[k]] == min_dist) {
+                    x += row[k];
+                    y += col[k];
+                    wayOut.append(String.format("%d, %d - ", x, y));
+                    break;
+                }
+            }
+        }
+        return wayOut.toString();
+    }
+
+    private static void printWayOut(String wayOut, int[][] mat, int M, int N) {
+        for (int a = 0; a < M; a++) {
+            for (int b = 0; b < N; b++) {
+                if (wayOut.contains(String.format("%d, %d", a, b))) {
+                    System.out.print(ANSI_RED + mat[a][b] + "\t" + ANSI_RESET);
+                } else {
+                    System.out.print(mat[a][b] + "\t");
+                }
             }
             System.out.println();
         }
     }
-
-    static void filling() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                array[i][0] = -1;
-                array[0][j] = -1;
-                array[i][columns - 1] = -1;
-                array[rows - 1][j] = -1;
-            }
-        }
-    }
-    static void waveFill(int x, int y){
-        waveFill(x, y, 0);
-    }
-    static void waveFill(int x, int y, int score) {
-        System.out.printf("CURRENT POINT %s %s\n", x, y);
-        String key = x+"|"+y;
-        if(visited.contains(key))
-            return;
-        else
-            visited.add(x+"|"+y);
-
-        if(array[x][y] < 0){
-            System.out.println("This is wall");
-            return;
-        }
-
-        if(calcResult[x][y] > score || calcResult[x][y] == 0){
-            calcResult[x][y] = score;
-        }
-
-        int next = score + 1;
-
-        if(y - 1 >= 0){
-            System.out.printf("Top %s %s\n", x, y - 1);
-            waveFill(x,y-1, next);
-        }
-        if(y + 1 < 10){
-            System.out.printf("Bottom %s %s\n", x, y + 1);
-            waveFill(x,y+1, next);
-        }
-        if(x - 1 >= 0){
-            System.out.printf("Left %s %s\n", x - 1, y);
-            waveFill(x - 1,y, next);
-        }
-        if (x + 1 < 10){
-            System.out.printf("Right %s %s\n", x + 1, y);
-            waveFill(x + 1,y, next);
-        }
-    }
-
-    public static void main(String[] args) {
-        filling();
-        calcResult = array.clone();
-        waveFill(6, 6);
-        print(calcResult);
-
-    }
-
 }
+
